@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 
     socklen_t addr_size;
 
-    char bufferU[1024], bufferP[1024];
+    char bufferU[1024], bufferP[1024], bufferE[1024], bufferF[1024], bufferEs[1024];
     pid_t childpid;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -61,6 +61,7 @@ int main(int argc, char *argv[]){
                     send(newSocket, bufferU, strlen(bufferU), 0);
                     bzero(bufferU, sizeof(bufferU));
                 }
+
                 recv(newSocket, bufferP, 1024,0);
                 if(strcmp(bufferP, "exit") == 0){
                     printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
@@ -69,6 +70,36 @@ int main(int argc, char *argv[]){
                     printf("Contraseña: %s\n", bufferP);
                     send(newSocket, bufferP, strlen(bufferP), 0);
                     bzero(bufferP, sizeof(bufferP));
+                }
+
+                recv(newSocket, bufferE, 1024,0);
+                if(strcmp(bufferE, "exit") == 0){
+                    printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
+                    break;
+                } else {
+                    printf("Eleccion: %s\n", bufferE);
+                    send(newSocket, bufferE, strlen(bufferE), 0);
+                    bzero(bufferE, sizeof(bufferE));
+                }
+
+                recv(newSocket, bufferF, 1024,0);
+                if(strcmp(bufferF, "exit") == 0){
+                    printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
+                    break;
+                } else {
+                    printf("Fecha: %s\n", bufferF);
+                    send(newSocket, bufferF, strlen(bufferF), 0);
+                    bzero(bufferF, sizeof(bufferF));
+                }
+
+                recv(newSocket, bufferEs, 1024,0);
+                if(strcmp(bufferEs, "exit") == 0){
+                    printf("Disconnected from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
+                    break;
+                } else {
+                    printf("Estudiante: %s\n", bufferEs);
+                    send(newSocket, bufferEs, strlen(bufferEs), 0);
+                    bzero(bufferEs, sizeof(bufferEs));
                 }
             }
         }

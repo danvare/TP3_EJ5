@@ -6,7 +6,7 @@ int main(int argc, char *argv[]){
 
     int clientSocket, ret;
     struct sockaddr_in serverAddr;
-    char bufferU[1024], bufferP[1024];
+    char bufferU[1024], bufferP[1024], bufferE[1024], bufferF[1024], bufferEs[1024];
 
 	clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(clientSocket < 0){
@@ -43,6 +43,7 @@ int main(int argc, char *argv[]){
         } else {
             printf("Server: \t%s\n", bufferU);
         }
+
         printf("Contraseña: \t");
         scanf("%s", &bufferP[0]);
         send(clientSocket, bufferP, strlen(bufferP), 0);
@@ -57,6 +58,54 @@ int main(int argc, char *argv[]){
             printf("[-]Error in receiving data.\n");
         } else {
             printf("Server: \t%s\n", bufferP);
+        }
+
+        printf("Eleccion: \t");
+        scanf("%s", &bufferE[0]);
+        send(clientSocket, bufferE, strlen(bufferE), 0);
+
+        if(strcmp(bufferE, "exit") == 0){
+            close(clientSocket);
+            printf("[-]Disconnected from server.\n");
+            exit(1);
+        }
+
+        if(recv(clientSocket, bufferE, 1024, 0) < 0){
+            printf("[-]Error in receiving data.\n");
+        } else {
+            printf("Server: \t%s\n", bufferE);
+        }
+
+        printf("Fecha: \t");
+        scanf("%s", &bufferF[0]);
+        send(clientSocket, bufferF, strlen(bufferF), 0);
+
+        if(strcmp(bufferF, "exit") == 0){
+            close(clientSocket);
+            printf("[-]Disconnected from server.\n");
+            exit(1);
+        }
+
+        if(recv(clientSocket, bufferF, 1024, 0) < 0){
+            printf("[-]Error in receiving data.\n");
+        } else {
+            printf("Server: \t%s\n", bufferF);
+        }
+
+        printf("Estudiante: \t");
+        scanf("%s", &bufferEs[0]);
+        send(clientSocket, bufferEs, strlen(bufferEs), 0);
+
+        if(strcmp(bufferEs, "exit") == 0){
+            close(clientSocket);
+            printf("[-]Disconnected from server.\n");
+            exit(1);
+        }
+
+        if(recv(clientSocket, bufferEs, 1024, 0) < 0){
+            printf("[-]Error in receiving data.\n");
+        } else {
+            printf("Server: \t%s\n", bufferEs);
         }
     }
 
